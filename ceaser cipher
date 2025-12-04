@@ -1,0 +1,15 @@
+public class Caesar {
+    static String caesar(String t, int k) {
+        String r = "";
+        for (char c : t.toCharArray())
+            r += (char) ((c - 'A' + k + 26) % 26 + 'A');
+        return r;
+    }
+    public static void main(String[] a) {
+        String t = "HELLOWORLD";
+        int k = 3;
+        String e = caesar(t, k);
+        System.out.println("Enc: " + e);
+        System.out.println("Dec: " + caesar(e, -k));
+    }
+}
