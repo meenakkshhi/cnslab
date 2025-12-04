@@ -1,0 +1,10 @@
+public class Hill {
+    public static void main(String[] a) {
+        int[][] key = {{3,3},{2,5}};
+        String t="HI"; // must be even length
+        t=t.toUpperCase();
+        int c1 = (key[0][0]*(t.charAt(0)-'A') + key[0][1]*(t.charAt(1)-'A')) % 26;
+        int c2 = (key[1][0]*(t.charAt(0)-'A') + key[1][1]*(t.charAt(1)-'A')) % 26;
+        System.out.println(""+(char)(c1+'A')+(char)(c2+'A'));
+    }
+}
