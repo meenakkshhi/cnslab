@@ -1,0 +1,33 @@
+public class RowColumn {
+    public static void main(String[] a){
+        String t="HELLOWORLD";
+        int r=4;
+        int c=(t.length()+r-1)/r;
+
+        char[][] m=new char[r][c];
+        int k=0;
+        for(int i=0;i<r;i++)
+            for(int j=0;j<c;j++)
+                m[i][j]= (k<t.length()? t.charAt(k++):'X');
+
+        String enc="";
+        for(int j=0;j<c;j++)
+            for(int i=0;i<r;i++)
+                enc+=m[i][j];
+
+        System.out.println("Enc: "+enc);
+
+        char[][] d=new char[r][c];
+        k=0;
+        for(int j=0;j<c;j++)
+            for(int i=0;i<r;i++)
+                d[i][j]=enc.charAt(k++);
+
+        String dec="";
+        for(int i=0;i<r;i++)
+            for(int j=0;j<c;j++)
+                dec+=d[i][j];
+
+        System.out.println("Dec: "+dec);
+    }
+}
