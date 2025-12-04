@@ -1,0 +1,54 @@
+import java.util.*;
+
+public class Playfair {
+    static char[][] m=new char[5][5];
+
+    static void build(String k){
+        boolean[] v=new boolean[26];
+        k=k.replace("J","I");
+        String s="";
+        for(char c:k.toCharArray()) if(!v[c-'A']){v[c-'A']=true; s+=c;}
+        for(char c='A';c<='Z';c++) if(c!='J'&&!v[c-'A']) s+=c;
+        int t=0; for(int i=0;i<5;i++) for(int j=0;j<5;j++) m[i][j]=s.charAt(t++);
+    }
+    static int[] pos(char c){
+        for(int i=0;i<5;i++) for(int j=0;j<5;j++)
+            if(m[i][j]==c) return new int[]{i,j};
+        return null;
+    }
+    static String f(String p){ // format
+        p=p.replace("J","I").toUpperCase();
+        if(p.length()%2==1) p+="X";
+        return p;
+    }
+
+    static String enc(String p){
+        p=f(p); String r="";
+        for(int i=0;i<p.length();i+=2){
+            int[] A=pos(p.charAt(i)), B=pos(p.charAt(i+1));
+            if(A[0]==B[0]){ r+=m[A[0]][(A[1]+1)%5]; r+=m[B[0]][(B[1]+1)%5]; }
+            else if(A[1]==B[1]){ r+=m[(A[0]+1)%5][A[1]]; r+=m[(B[0]+1)%5][B[1]]; }
+            else{ r+=m[A[0]][B[1]]; r+=m[B[0]][A[1]]; }
+        }
+        return r;
+    }
+
+    static String dec(String p){
+        String r="";
+        for(int i=0;i<p.length();i+=2){
+            int[] A=pos(p.charAt(i)), B=pos(p.charAt(i+1));
+            if(A[0]==B[0]){ r+=m[A[0]][(A[1]+4)%5]; r+=m[B[0]][(B[1]+4)%5]; }
+            else if(A[1]==B[1]){ r+=m[(A[0]+4)%5][A[1]]; r+=m[(B[0]+4)%5][B[1]]; }
+            else{ r+=m[A[0]][B[1]]; r+=m[B[0]][A[1]]; }
+        }
+        return r;
+    }
+
+    public static void main(String[] a){
+        build("MONARCHY");
+        String enc = enc("HELLO");
+        String dec = dec(enc);
+        System.out.println(enc);
+        System.out.println(dec);
+    }
+}
