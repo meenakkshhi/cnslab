@@ -1,0 +1,23 @@
+import java.security.*;
+import java.util.Base64;
+
+public class dig {
+    public static void main(String[] args) throws Exception {
+        KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
+        kpg.initialize(2048);
+        KeyPair kp = kpg.generateKeyPair();
+
+        String msg = "This is a confidential message.";
+
+        Signature s = Signature.getInstance("SHA256withRSA");
+        s.initSign(kp.getPrivate());
+        s.update(msg.getBytes());
+        byte[] sig = s.sign();
+
+        System.out.println("Signature: " + Base64.getEncoder().encodeToString(sig));
+
+        s.initVerify(kp.getPublic());
+        s.update(msg.getBytes());
+        System.out.println("Verified: " + s.verify(sig));
+    }
+}
