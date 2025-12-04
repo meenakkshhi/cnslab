@@ -1,0 +1,47 @@
+public class RailFence {
+    static String enc(String t,int r){
+        char[][] m=new char[r][t.length()];
+        boolean down=false; int row=0;
+        for(int i=0;i<t.length();i++){
+            m[row][i]=t.charAt(i);
+            if(row==0||row==r-1) down=!down;
+            row+=down?1:-1;
+        }
+        String o="";
+        for(char[] x:m) for(char c:x) if(c!=0) o+=c;
+        return o;
+    }
+
+    static String dec(String t,int r){
+        char[][] m=new char[r][t.length()];
+        boolean down=false; int row=0;
+
+        for(int i=0;i<t.length();i++){
+            m[row][i]='*';
+            if(row==0||row==r-1) down=!down;
+            row+=down?1:-1;
+        }
+
+        int idx=0;
+        for(int i=0;i<r;i++)
+            for(int j=0;j<t.length();j++)
+                if(m[i][j]=='*') m[i][j]=t.charAt(idx++);
+
+        String o=""; down=false; row=0;
+        for(int i=0;i<t.length();i++){
+            o+=m[row][i];
+            if(row==0||row==r-1) down=!down;
+            row+=down?1:-1;
+        }
+        return o;
+    }
+
+    public static void main(String[] a){
+        String t="HELLOWORLD";
+        int r=3;
+        String e=enc(t,r);
+        String d=dec(e,r);
+        System.out.println(e);
+        System.out.println(d);
+    }
+}
